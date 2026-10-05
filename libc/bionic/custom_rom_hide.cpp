@@ -300,7 +300,13 @@ static bool is_rom_framework_artifact(const char* path) {
     }
     if (!rest) return false;
     const char* slash = strrchr(rest, '/');
-    return basename_is_rom_artifact(slash ? slash + 1 : rest);
+    const char* basename = slash ? slash + 1 : rest;
+
+    if (strcmp(basename, "org.lineageos.platform-res.apk") == 0) {
+        return false;
+    }
+
+    return basename_is_rom_artifact(basename);
 }
 
 static bool is_blocked_dir(const char* path) {
